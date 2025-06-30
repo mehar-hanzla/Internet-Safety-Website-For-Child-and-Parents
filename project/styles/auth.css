@@ -1,0 +1,239 @@
+/* Authentication Styles */
+.auth-form {
+    width: 100%;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.checkmark {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    position: relative;
+    transition: var(--transition);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.forgot-link {
+    color: var(--primary);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.forgot-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: var(--space-4);
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}
+
+.auth-switch a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.auth-switch a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Form Validation */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group .error-message {
+    color: var(--error);
+    font-size: 0.875rem;
+    margin-top: var(--space-1);
+    display: block;
+}
+
+.form-group.success input,
+.form-group.success select,
+.form-group.success textarea {
+    border-color: var(--success);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Loading State */
+.btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    color: var(--white);
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: var(--space-2);
+}
+
+.strength-bar {
+    height: 0.25rem;
+    background-color: var(--gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.strength-fill {
+    height: 100%;
+    transition: var(--transition);
+    border-radius: var(--radius-full);
+}
+
+.strength-fill.weak {
+    width: 25%;
+    background-color: var(--error);
+}
+
+.strength-fill.fair {
+    width: 50%;
+    background-color: var(--accent);
+}
+
+.strength-fill.good {
+    width: 75%;
+    background-color: var(--primary);
+}
+
+.strength-fill.strong {
+    width: 100%;
+    background-color: var(--success);
+}
+
+.strength-text {
+    font-size: 0.75rem;
+    margin-top: var(--space-1);
+    color: var(--gray-600);
+}
+
+/* Social Login Buttons */
+.social-login {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--gray-200);
+}
+
+.social-login p {
+    text-align: center;
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    margin-bottom: var(--space-4);
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-lg);
+    background-color: var(--white);
+    color: var(--gray-700);
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.social-btn:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-400);
+    color: var(--gray-900);
+}
+
+.social-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .modal-content {
+        margin: var(--space-4);
+        max-width: none;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+    
+    .social-buttons {
+        gap: var(--space-2);
+    }
+    
+    .social-btn {
+        padding: var(--space-2) var(--space-3);
+        font-size: 0.875rem;
+    }
+}

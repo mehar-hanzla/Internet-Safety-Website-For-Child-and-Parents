@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetWise - Internet Safety Training for Families</title>
+    <meta name="description" content="Interactive internet safety training for kids and comprehensive tools for parents. Learn about cyberbullying, online scams, and digital citizenship.">
+    <meta name="keywords" content="internet safety, cyberbullying, online safety, kids safety, parental controls, digital citizenship">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233B82F6' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/pages.css">
+    <link rel="stylesheet" href="styles/auth.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="js/main.js" as="script">
+    <link rel="preload" href="js/auth.js" as="script">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand -->
+            <div class="nav-brand">
+                <a href="#" class="brand-link" onclick="showPage('home')">
+                    <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span class="brand-text">NetWise</span>
+                </a>
+            </div>
+
+            <!-- Navigation Menu -->
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="nav-link" data-page="home" onclick="showPage('home')">Home</a>
+                <a href="#" class="nav-link" data-page="kids-learning" onclick="showPage('kids-learning')">Kids Learning</a>
+                <a href="#" class="nav-link" data-page="parent-dashboard" onclick="showPage('parent-dashboard')">Parent Tools</a>
+                <a href="#" class="nav-link" data-page="ai-assistant" onclick="showPage('ai-assistant')">AI Assistant</a>
+                <a href="#" class="nav-link" data-page="certification" onclick="showPage('certification')">Certification</a>
+                <a href="#" class="nav-link" data-page="resources" onclick="showPage('resources')">Resources</a>
+                <a href="#" class="nav-link" data-page="about" onclick="showPage('about')">About</a>
+                <a href="#" class="nav-link" data-page="contact" onclick="showPage('contact')">Contact</a>
+            </div>
+
+            <!-- Auth Section -->
+            <div class="nav-auth" id="navAuth">
+                <button class="btn btn-outline" onclick="showAuthModal('login')">Login</button>
+                <button class="btn btn-primary" onclick="showAuthModal('signup')">Sign Up</button>
+            </div>
+
+            <!-- User Section -->
+            <div class="nav-user hidden" id="navUser">
+                <div class="user-dropdown">
+                    <button class="user-button" onclick="toggleUserMenu()">
+                        <div class="user-avatar">👤</div>
+                        <span class="user-name" id="userName">User</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="user-menu hidden" id="userMenu">
+                        <a href="#" onclick="showPage('profile')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            Profile
+                        </a>
+                        <a href="#" onclick="showPage('settings')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                            Settings
+                        </a>
+                        <a href="#" onclick="logout()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16,17 21,12 16,7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="nav-toggle" onclick="toggleMobileMenu()">
+                <span class="hamburger"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <div>
+                            <h1 class="hero-title">
+                                Keeping Your Family
+                                <span style="color: var(--accent);">Safe Online</span>
+                            </h1>
+                            <p class="hero-description">
+                                Interactive internet safety training for kids and comprehensive tools for parents. 
+                                Learn about cyberbullying, online scams, and digital citizenship with our AI-powered platform.
+                            </p>
+                            <div class="hero-buttons">
+                                <button class="btn btn-accent btn-lg" onclick="showPage('kids-learning')">
+                                    Start Kids Learning
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12,5 19,12 12,19"></polyline>
+                                    </svg>
+                                </button>
+                                <button class="btn btn-outline-white btn-lg" onclick="showPage('parent-dashboard')">
+                                    Parent Resources
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-card">
+                                <div class="hero-video" onclick="playIntroVideo()">
+                                    <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="5,3 19,12 5,21"></polygon>
+                                    </svg>
+                                </div>
+                                <p class="hero-video-text">Watch our introduction video</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">50,000+</div>
+                            <div class="stat-label">Families Protected</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Interactive Lessons</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Parent Satisfaction</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">AI Support</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Complete Internet Safety Solution</h2>
+                        <p class="section-description">
+                            From interactive learning for kids to comprehensive monitoring tools for parents, 
+                            we provide everything your family needs to stay safe online.
+                        </p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="showPage('kids-learning')">
+                            <div class="feature-icon bg-blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Interactive Kids Learning</h3>
+                            <p class="feature-description">
+                                Age-appropriate lessons with games and activities to teach internet safety in a fun way.
+                            </p>
+                            <a href="#" class="feature-link">
+                                Learn More
+                                <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12,5 19,12 12,19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="feature-card" onclick="showPage('parent-dashboard')">
+                            <div class="feature-icon bg-green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Parent Dashboard</h3>
+                            <p class="feature-description">
+                                Tools and resources to help parents guide their children's online journey safely.
+                            </p>
+                            <a href="#" class="feature-link">
+                                Learn More
+                                <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12,5 19,12 12,19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="feature-card" onclick="showPage('ai-assistant')">
+                            <div class="feature-icon bg-purple">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 8V4H8"/>
+                                    <rect width="16" height="12" x="4" y="8" rx="2"/>
+                                    <path d="M2 14h2"/>
+                                    <path d="M20 14h2"/>
+                                    <path d="M15 13v2"/>
+                                    <path d="M9 13v2"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">AI Safety Assistant</h3>
+                            <p class="feature-description">
+                                Get instant help and advice from our AI-powered safety expert available 24/7.
+                            </p>
+                            <a href="#" class="feature-link">
+                                Learn More
+                                <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12,5 19,12 12,19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="feature-card" onclick="showPage('certification')">
+                            <div class="feature-icon bg-orange">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="8" r="7"/>
+                                    <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Certification Program</h3>
+                            <p class="feature-description">
+                                Complete courses and earn certificates to validate your internet safety knowledge.
+                            </p>
+                            <a href="#" class="feature-link">
+                                Learn More
+                                <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12,5 19,12 12,19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="testimonials">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Trusted by Families Worldwide</h2>
+                    </div>
+
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="testimonial-text">
+                                "NetWise helped my 8-year-old understand online safety in a fun, engaging way. The interactive lessons are fantastic!"
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">Sarah Johnson</div>
+                                <div class="author-role">Parent of 2</div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="testimonial-text">
+                                "The parent dashboard gives me peace of mind. I can monitor my kids' progress and get alerts about potential risks."
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">Michael Chen</div>
+                                <div class="author-role">Father</div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="testimonial-text">
+                                "The AI assistant is incredibly helpful. It answered all my questions about cyberbullying and gave practical advice."
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">Lisa Williams</div>
+                                <div class="author-role">Educator</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta">
+                <div class="container">
+                    <div class="cta-content">
+                        <h2 class="cta-title">Ready to Make Your Family Safer Online?</h2>
+                        <p class="cta-description">
+                            Join thousands of families who trust NetWise for their internet safety education.
+                        </p>
+                        <div class="cta-buttons">
+                            <button class="btn btn-accent btn-lg" onclick="showPage('kids-learning')">
+                                Start Free Trial
+                            </button>
+                            <button class="btn btn-outline-white btn-lg" onclick="showPage('ai-assistant')">
+                                Try AI Assistant
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Kids Learning Page -->
+        <div id="kids-learning" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Kids Internet Safety Learning</h1>
+                    <p class="page-description">
+                        Fun, interactive lessons designed for different age groups to teach internet safety through games, stories, and activities.
+                    </p>
+                </div>
+
+                <!-- Age Group Selector -->
+                <div class="age-selector">
+                    <button class="age-btn active" data-age="6-8" onclick="selectAgeGroup('6-8')">6-8 Years</button>
+                    <button class="age-btn" data-age="9-12" onclick="selectAgeGroup('9-12')">9-12 Years</button>
+                    <button class="age-btn" data-age="13-16" onclick="selectAgeGroup('13-16')">13-16 Years</button>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h2>Progress Overview</h2>
+                        <div class="progress-stats">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                            </svg>
+                            <span id="progressText">3/8 Completed</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 37.5%;"></div>
+                    </div>
+                    <p class="progress-percentage" id="progressPercentage">37% Complete</p>
+                </div>
+
+                <!-- Lessons Grid -->
+                <div class="lessons-grid" id="lessonsGrid">
+                    <!-- Lessons will be populated by JavaScript -->
+                </div>
+
+                <!-- Download Resources -->
+                <div class="download-section">
+                    <div class="download-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </div>
+                    <h2>Download Safety Resources</h2>
+                    <p>
+                        Get printable safety guides, activity sheets, and parent discussion guides for offline learning.
+                    </p>
+                    <div class="download-buttons">
+                        <button class="btn btn-white">Safety Coloring Book</button>
+                        <button class="btn btn-white">Family Discussion Guide</button>
+                        <button class="btn btn-white">Emergency Contact Sheet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parent Dashboard Page -->
+        <div id="parent-dashboard" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Parent Dashboard</h1>
+                    <p class="page-description">Monitor and guide your children's online activities</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-label">Children Monitored</div>
+                                <div class="stat-value">2</div>
+                            </div>
+                            <div class="stat-icon bg-blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-label">Active Alerts</div>
+                                <div class="stat-value">3</div>
+                            </div>
+                            <div class="stat-icon bg-orange">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                    <line x1="12" y1="9" x2="12" y2="13"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-label">Safety Score</div>
+                                <div class="stat-value">85%</div>
+                            </div>
+                            <div class="stat-icon bg-green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-label">Lessons Completed</div>
+                                <div class="stat-value">12</div>
+                            </div>
+                            <div class="stat-icon bg-purple">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="12" x2="18" y2="12"/>
+                                    <path d="M22 6L2 6"/>
+                                    <path d="M22 18L2 18"/>
+                                    <path d="M6 2v20"/>
+                                    <path d="M14 2v20"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Children Overview -->
+                <div class="card">
+                    <h2 class="card-title">Children Overview</h2>
+                    <div class="children-grid">
+                        <div class="child-card">
+                            <div class="child-info">
+                                <span class="child-avatar">👧</span>
+                                <div>
+                                    <div class="child-name">Emma</div>
+                                    <p class="child-meta">Age 12 • 2 min ago</p>
+                                </div>
+                            </div>
+                            <div class="child-status safe">✓ Safe</div>
+                        </div>
+
+                        <div class="child-card">
+                            <div class="child-info">
+                                <span class="child-avatar">👦</span>
+                                <div>
+                                    <div class="child-name">Jack</div>
+                                    <p class="child-meta">Age 8 • 15 min ago</p>
+                                </div>
+                            </div>
+                            <div class="child-status warning">⚠ Needs Attention</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Alerts -->
+                <div class="card">
+                    <h2 class="card-title">Recent Alerts</h2>
+                    <div class="alerts-list">
+                        <div class="alert-item high">
+                            <div>
+                                <p class="alert-message">New friend request on social media</p>
+                                <p class="alert-meta">Child: Emma • 2 hours ago</p>
+                            </div>
+                            <button class="alert-action">View Details</button>
+                        </div>
+
+                        <div class="alert-item medium">
+                            <div>
+                                <p class="alert-message">Attempted to visit a blocked website</p>
+                                <p class="alert-meta">Child: Emma • 10 minutes ago</p>
+                            </div>
+                            <button class="alert-action">View Details</button>
+                        </div>
+
+                        <div class="alert-item low">
+                            <div>
+                                <p class="alert-message">Completed internet safety lesson</p>
+                                <p class="alert-meta">Child: Jack • 1 hour ago</p>
+                            </div>
+                            <button class="alert-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="card">
+                    <div class="tab-nav">
+                        <button class="tab-btn active" onclick="showDashboardTab('overview')">Overview</button>
+                        <button class="tab-btn" onclick="showDashboardTab('monitoring')">Monitoring</button>
+                        <button class="tab-btn" onclick="showDashboardTab('controls')">Parental Controls</button>
+                        <button class="tab-btn" onclick="showDashboardTab('resources')">Resources</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <div id="overview-tab" class="tab-pane active">
+                            <div class="overview-content">
+                                <svg class="overview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                <h3>Family Protection Active</h3>
+                                <p>Your children are protected with comprehensive monitoring and safety controls.</p>
+                            </div>
+                        </div>
+
+                        <div id="monitoring-tab" class="tab-pane">
+                            <div class="monitoring-grid">
+                                <div class="monitoring-card">
+                                    <h4>Screen Time Today</h4>
+                                    <div class="screen-time-item">
+                                        <div class="screen-time-info">
+                                            <span>Emma</span>
+                                            <span>3.2h / 4.0h</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 80%; background-color: #F59E0B;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="screen-time-item">
+                                        <div class="screen-time-info">
+                                            <span>Jack</span>
+                                            <span>1.8h / 2.5h</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 72%; background-color: #10B981;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="monitoring-card">
+                                    <h4>Top Apps Used</h4>
+                                    <div class="app-list">
+                                        <div class="app-item">
+                                            <span class="app-icon">🎥</span>
+                                            <span class="app-name">YouTube Kids</span>
+                                            <span class="app-time">1.2h</span>
+                                        </div>
+                                        <div class="app-item">
+                                            <span class="app-icon">🎮</span>
+                                            <span class="app-name">Minecraft</span>
+                                            <span class="app-time">45m</span>
+                                        </div>
+                                        <div class="app-item">
+                                            <span class="app-icon">📚</span>
+                                            <span class="app-name">Khan Academy</span>
+                                            <span class="app-time">30m</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="controls-tab" class="tab-pane">
+                            <div class="controls-grid">
+                                <div class="control-card">
+                                    <h4>Content Filters</h4>
+                                    <div class="filter-list">
+                                        <div class="filter-item">
+                                            <span>Adult Content</span>
+                                            <div class="toggle active"></div>
+                                        </div>
+                                        <div class="filter-item">
+                                            <span>Violence</span>
+                                            <div class="toggle active"></div>
+                                        </div>
+                                        <div class="filter-item">
+                                            <span>Social Media</span>
+                                            <div class="toggle"></div>
+                                        </div>
+                                        <div class="filter-item">
+                                            <span>Gaming Sites</span>
+                                            <div class="toggle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="control-card">
+                                    <h4>Daily Time Limits</h4>
+                                    <div class="time-limits">
+                                        <div class="time-limit-item">
+                                            <span>Emma</span>
+                                            <input type="range" class="time-slider" min="0" max="8" step="0.5" value="4">
+                                            <span>4.0h</span>
+                                        </div>
+                                        <div class="time-limit-item">
+                                            <span>Jack</span>
+                                            <input type="range" class="time-slider" min="0" max="8" step="0.5" value="2.5">
+                                            <span>2.5h</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="resources-tab" class="tab-pane">
+                            <div class="resources-grid">
+                                <div class="resource-card">
+                                    <h4>Parent Safety Guide</h4>
+                                    <p>Comprehensive guide to online safety</p>
+                                    <button class="btn btn-primary btn-full">Download PDF</button>
+                                </div>
+                                <div class="resource-card">
+                                    <h4>Conversation Starters</h4>
+                                    <p>Questions to discuss with your kids</p>
+                                    <button class="btn btn-primary btn-full">Download PDF</button>
+                                </div>
+                                <div class="resource-card">
+                                    <h4>Emergency Contacts</h4>
+                                    <p>Important numbers and resources</p>
+                                    <button class="btn btn-primary btn-full">Download PDF</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Page -->
+        <div id="ai-assistant" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg style="width: 3rem; height: 3rem; color: var(--primary); margin-right: 0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8V4H8"/>
+                            <rect width="16" height="12" x="4" y="8" rx="2"/>
+                            <path d="M2 14h2"/>
+                            <path d="M20 14h2"/>
+                            <path d="M15 13v2"/>
+                            <path d="M9 13v2"/>
+                        </svg>
+                        <h1 class="page-title" style="margin: 0;">NetWise AI Assistant</h1>
+                    </div>
+                    <p class="page-description">
+                        Get instant, expert advice on internet safety, cyberbullying, privacy, and digital citizenship from our AI-powered assistant.
+                    </p>
+                </div>
+
+                <!-- API Key Setup -->
+                <div id="apiSetup" style="background-color: var(--primary-light); border: 1px solid var(--primary); border-radius: var(--radius-lg); padding: 1rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span style="color: var(--primary-dark); font-weight: 600;">
+                                For enhanced AI responses, add your Hugging Face API key
+                            </span>
+                        </div>
+                        <button onclick="toggleApiKeyInput()" style="color: var(--primary); background: none; border: none; font-weight: 600; cursor: pointer;">
+                            Setup
+                        </button>
+                    </div>
+                    <div id="apiKeyInput" class="hidden" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <input type="password" id="apiKeyField" placeholder="Enter your Hugging Face API key" style="flex: 1; padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+                        <button onclick="saveApiKey()" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+
+                <!-- Chat Container -->
+                <div style="background-color: var(--white); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); height: 600px; display: flex; flex-direction: column;">
+                    <!-- Messages Area -->
+                    <div id="chatMessages" style="flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Messages will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Quick Questions -->
+                    <div style="border-top: 1px solid var(--gray-200); padding: 1rem;">
+                        <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 0.75rem;">Quick questions:</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                            <button class="quick-btn" onclick="sendQuickQuestion('How do I report cyberbullying?')">How do I report cyberbullying?</button>
+                            <button class="quick-btn" onclick="sendQuickQuestion('What makes a strong password?')">What makes a strong password?</button>
+                            <button class="quick-btn" onclick="sendQuickQuestion('How do I adjust privacy settings?')">How do I adjust privacy settings?</button>
+                            <button class="quick-btn" onclick="sendQuickQuestion('What are common online scams?')">What are common online scams?</button>
+                            <button class="quick-btn" onclick="sendQuickQuestion('How much screen time is healthy?')">How much screen time is healthy?</button>
+                        </div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div style="border-top: 1px solid var(--gray-200); padding: 1rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <input type="text" id="messageInput" placeholder="Ask me anything about internet safety..." style="flex: 1; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-full);">
+                            <button id="sendBtn" onclick="sendMessage()" class="btn btn-primary" style="border-radius: var(--radius-full); padding: 0.75rem 1.5rem;">
+                                <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Notice -->
+                <div style="margin-top: 1.5rem; background-color: var(--accent-light); border: 1px solid var(--accent); border-radius: var(--radius-lg); padding: 1rem;">
+                    <div style="display: flex; align-items: flex-start;">
+                        <svg style="width: 1.25rem; height: 1.25rem; color: var(--accent-dark); margin-right: 0.5rem; margin-top: 0.125rem; flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <div style="color: var(--accent-dark);">
+                            <p style="font-weight: 600; margin-bottom: 0.25rem;">Important Safety Reminder</p>
+                            <p style="font-size: 0.875rem; margin: 0;">
+                                While our AI assistant provides helpful guidance, always involve trusted adults (parents, teachers, counselors) 
+                                in serious safety situations. For emergencies, contact local authorities or call emergency services.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certification Page -->
+        <div id="certification" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Internet Safety Certification</h1>
+                    <p class="page-description">
+                        Earn recognized certificates in internet safety through our comprehensive training programs and assessments.
+                    </p>
+                </div>
+
+                <div class="coming-soon">
+                    <svg style="width: 4rem; height: 4rem; color: var(--primary); margin-bottom: 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="7"/>
+                        <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                    </svg>
+                    <h2>Certification Program Coming Soon</h2>
+                    <p>We're developing comprehensive certification courses for internet safety. Check back soon!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Page -->
+        <div id="resources" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Safety Resources Library</h1>
+                    <p class="page-description">
+                        Download comprehensive guides, watch educational videos, and access tools to keep your family safe online.
+                    </p>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h4>Complete Parent Safety Guide</h4>
+                        <p>Comprehensive 50-page guide covering all aspects of online safety for families</p>
+                        <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600);">
+                            <span>PDF • 2.1 MB • 15,420 downloads</span>
+                        </div>
+                        <button class="btn btn-primary btn-full">
+                            <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Cyberbullying Response Handbook</h4>
+                        <p>Step-by-step guide for parents and educators on handling cyberbullying incidents</p>
+                        <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600);">
+                            <span>PDF • 1.8 MB • 8,930 downloads</span>
+                        </div>
+                        <button class="btn btn-primary btn-full">
+                            <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Social Media Privacy Settings</h4>
+                        <p>Platform-specific instructions for securing privacy on major social networks</p>
+                        <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600);">
+                            <span>PDF • 850 KB • 9,870 downloads</span>
+                        </div>
+                        <button class="btn btn-primary btn-full">
+                            <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Digital Citizenship Workbook</h4>
+                        <p>Interactive exercises for middle and high school students</p>
+                        <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600);">
+                            <span>PDF • 3.2 MB • 6,540 downloads</span>
+                        </div>
+                        <button class="btn btn-primary btn-full">
+                            <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Family Internet Agreement</h4>
+                        <p>Customizable contract for establishing household internet rules</p>
+                        <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600);">
+                            <span>PDF • 320 KB • 11,230 downloads</span>
+                        </div>
+                        <button class="btn btn-primary btn-full">
+                            <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Emergency Response Guide</h4>
+                        <p>What to do in various online safety emergency situations</p>
+                        <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600);">
+                            <span>PDF • 650 KB • 8,940 downloads</span>
+                        </div>
+                        <button class="btn btn-primary btn-full">
+                            <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Emergency Resources -->
+                <div style="margin-top: 3rem; background-color: #FEE2E2; border: 1px solid #FECACA; border-radius: var(--radius-xl); padding: 2rem;">
+                    <h2 style="color: #991B1B; margin-bottom: 1rem;">Emergency Resources</h2>
+                    <p style="color: #7F1D1D; margin-bottom: 1.5rem;">
+                        If you or someone you know is experiencing online harassment, exploitation, or other serious internet safety issues, 
+                        these resources can provide immediate help.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="background-color: var(--white); border-radius: var(--radius-lg); padding: 1rem; border: 1px solid #FECACA;">
+                            <h3 style="color: #991B1B; font-size: 1rem; margin-bottom: 0.5rem;">National Center for Missing & Exploited Children</h3>
+                            <p style="color: #7F1D1D; font-size: 0.875rem; margin-bottom: 0.25rem;">1-800-THE-LOST (1-800-843-5678)</p>
+                            <p style="color: #991B1B; font-size: 0.75rem;">missingkids.org</p>
+                        </div>
+                        <div style="background-color: var(--white); border-radius: var(--radius-lg); padding: 1rem; border: 1px solid #FECACA;">
+                            <h3 style="color: #991B1B; font-size: 1rem; margin-bottom: 0.5rem;">Crisis Text Line</h3>
+                            <p style="color: #7F1D1D; font-size: 0.875rem; margin-bottom: 0.25rem;">Text HOME to 741741</p>
+                            <p style="color: #991B1B; font-size: 0.75rem;">crisistextline.org</p>
+                        </div>
+                        <div style="background-color: var(--white); border-radius: var(--radius-lg); padding: 1rem; border: 1px solid #FECACA;">
+                            <h3 style="color: #991B1B; font-size: 1rem; margin-bottom: 0.5rem;">FBI Internet Crime Complaint Center</h3>
+                            <p style="color: #7F1D1D; font-size: 0.875rem; margin-bottom: 0.25rem;">ic3.gov</p>
+                            <p style="color: #991B1B; font-size: 0.75rem;">Report Cyber Crimes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">About NetWise</h1>
+                    <p class="page-description">
+                        We're on a mission to make the internet a safer place for families worldwide through 
+                        innovative education, cutting-edge technology, and compassionate support.
+                    </p>
+                </div>
+
+                <div class="coming-soon">
+                    <svg style="width: 4rem; height: 4rem; color: var(--primary); margin-bottom: 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <h2>About Page Coming Soon</h2>
+                    <p>Learn more about our mission, team, and commitment to internet safety.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Contact NetWise</h1>
+                    <p class="page-description">
+                        We're here to help keep your family safe online. Reach out with questions, concerns, or feedback.
+                    </p>
+                </div>
+
+                <!-- Emergency Alert -->
+                <div style="background-color: #FEE2E2; border: 1px solid #FECACA; border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: flex-start;">
+                        <svg style="width: 1.5rem; height: 1.5rem; color: #DC2626; margin-right: 0.75rem; margin-top: 0.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <div>
+                            <h3 style="color: #991B1B; font-size: 1.125rem; margin-bottom: 0.5rem;">Emergency Situations</h3>
+                            <p style="color: #7F1D1D; margin-bottom: 1rem;">
+                                If you or your child is in immediate danger or experiencing serious online threats, 
+                                contact local law enforcement immediately. For non-emergency safety concerns, use our contact form below.
+                            </p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                                <button class="btn" style="background-color: #DC2626; color: var(--white);">Emergency Support</button>
+                                <button class="btn btn-outline" style="border-color: #DC2626; color: #DC2626;">Safety Resources</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                    <!-- Contact Form -->
+                    <div style="grid-column: 1 / -1;">
+                        <div class="card">
+                            <h2 class="card-title">Send us a Message</h2>
+                            
+                            <form onsubmit="handleContactSubmit(event)">
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                        <div class="form-group">
+                                            <label for="contactName">Full Name *</label>
+                                            <input type="text" id="contactName" name="name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contactEmail">Email Address *</label>
+                                            <input type="email" id="contactEmail" name="email" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contactCategory">Category</label>
+                                        <select id="contactCategory" name="category">
+                                            <option value="general">General Inquiry</option>
+                                            <option value="safety">Safety Concern</option>
+                                            <option value="technical">Technical Support</option>
+                                            <option value="billing">Billing Question</option>
+                                            <option value="feedback">Feedback</option>
+                                            <option value="partnership">Partnership</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contactSubject">Subject *</label>
+                                        <input type="text" id="contactSubject" name="subject" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contactMessage">Message *</label>
+                                        <textarea id="contactMessage" name="message" rows="6" required placeholder="Please provide as much detail as possible..."></textarea>
+                                    </div>
+
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="checkbox" id="contactUrgent" name="urgent">
+                                        <label for="contactUrgent" style="margin: 0; font-weight: normal;">This is an urgent safety concern</label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                        </svg>
+                                        Send Message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">Get in Touch</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                                    <div style="background-color: var(--primary-light); padding: 0.5rem; border-radius: var(--radius-lg);">
+                                        <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                            <polyline points="22,6 12,13 2,6"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin-bottom: 0.25rem;">Email Support</h4>
+                                        <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 0.25rem;">Get help via email within 24 hours</p>
+                                        <p style="font-size: 0.875rem; font-weight: 600; color: var(--primary);">support@netwise.com</p>
+                                        <p style="font-size: 0.75rem; color: var(--gray-500);">24/7</p>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                                    <div style="background-color: var(--primary-light); padding: 0.5rem; border-radius: var(--radius-lg);">
+                                        <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin-bottom: 0.25rem;">Phone Support</h4>
+                                        <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 0.25rem;">Speak with our safety experts</p>
+                                        <p style="font-size: 0.875rem; font-weight: 600; color: var(--primary);">1-800-NETWISE</p>
+                                        <p style="font-size: 0.75rem; color: var(--gray-500);">Mon-Fri 9AM-6PM EST</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">Office Information</h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <svg style="width: 1.25rem; height: 1.25rem; color: var(--gray-400);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                    <div>
+                                        <p style="font-weight: 600; margin-bottom: 0.25rem;">NetWise Headquarters</p>
+                                        <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">123 Safety Street<br>San Francisco, CA 94105</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <svg style="width: 1.25rem; height: 1.25rem; color: var(--gray-400);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    <div>
+                                        <p style="font-weight: 600; margin-bottom: 0.25rem;">Business Hours</p>
+                                        <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Monday - Friday: 9AM - 6PM PST<br>Weekend: Emergency support only</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">My Profile</h1>
+                    <p class="page-description">Manage your account information and preferences</p>
+                </div>
+
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <div class="card">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <div class="user-avatar" style="width: 5rem; height: 5rem; font-size: 2rem; margin: 0 auto 1rem;">👤</div>
+                            <h2 id="profileName" style="margin-bottom: 0.5rem;">User Name</h2>
+                            <p id="profileEmail" style="color: var(--gray-600); margin: 0;">user@example.com</p>
+                        </div>
+
+                        <form id="profileForm" onsubmit="handleProfileUpdate(event)">
+                            <div class="form-group">
+                                <label for="profileFullName">Full Name</label>
+                                <input type="text" id="profileFullName" name="fullName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profileEmailField">Email Address</label>
+                                <input type="email" id="profileEmailField" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profileUserType">Account Type</label>
+                                <select id="profileUserType" name="userType">
+                                    <option value="parent">Parent</option>
+                                    <option value="educator">Educator</option>
+                                    <option value="student">Student</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profileBio">Bio (Optional)</label>
+                                <textarea id="profileBio" name="bio" rows="3" placeholder="Tell us a bit about yourself..."></textarea>
+                            </div>
+
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="btn btn-primary" style="flex: 1;">Update Profile</button>
+                                <button type="button" class="btn btn-outline" onclick="showChangePasswordModal()">Change Password</button>
+                            </div>
+                        </form>
+
+                        <div style="border-top: 1px solid var(--gray-200); margin-top: 2rem; padding-top: 2rem;">
+                            <h3 style="margin-bottom: 1rem; color: var(--error);">Danger Zone</h3>
+                            <p style="color: var(--gray-600); margin-bottom: 1rem; font-size: 0.875rem;">
+                                Once you delete your account, there is no going back. Please be certain.
+                            </p>
+                            <button class="btn" style="background-color: var(--error); color: var(--white);" onclick="confirmDeleteAccount()">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Settings</h1>
+                    <p class="page-description">Customize your NetWise experience</p>
+                </div>
+
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                        <!-- Notification Settings -->
+                        <div class="card">
+                            <h3 class="card-title">Notification Preferences</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div class="setting-item">
+                                    <label>Email Notifications</label>
+                                    <div class="toggle active" onclick="toggleSetting(this)"></div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Safety Alerts</label>
+                                    <div class="toggle active" onclick="toggleSetting(this)"></div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Weekly Reports</label>
+                                    <div class="toggle" onclick="toggleSetting(this)"></div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Product Updates</label>
+                                    <div class="toggle active" onclick="toggleSetting(this)"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Privacy Settings -->
+                        <div class="card">
+                            <h3 class="card-title">Privacy & Security</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div class="setting-item">
+                                    <label>Share Usage Analytics</label>
+                                    <div class="toggle" onclick="toggleSetting(this)"></div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Two-Factor Authentication</label>
+                                    <button class="btn btn-outline btn-sm" onclick="setupTwoFactor()">Setup</button>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Data Export</label>
+                                    <button class="btn btn-outline btn-sm" onclick="exportUserData()">Download Data</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- App Preferences -->
+                        <div class="card">
+                            <h3 class="card-title">App Preferences</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div class="setting-item">
+                                    <label>Theme</label>
+                                    <select onchange="changeTheme(this.value)" style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+                                        <option value="light">Light</option>
+                                        <option value="dark">Dark</option>
+                                        <option value="auto">Auto</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Language</label>
+                                    <select style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+                                        <option value="en">English</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="fr">French</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Auto-save Progress</label>
+                                    <div class="toggle active" onclick="toggleSetting(this)"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Assistant Settings -->
+                        <div class="card">
+                            <h3 class="card-title">AI Assistant</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div class="setting-item">
+                                    <label>Hugging Face API Key</label>
+                                    <button class="btn btn-outline btn-sm" onclick="manageApiKey()">Manage</button>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Response Speed</label>
+                                    <select style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+                                        <option value="fast">Fast</option>
+                                        <option value="balanced" selected>Balanced</option>
+                                        <option value="detailed">Detailed</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Save Chat History</label>
+                                    <div class="toggle active" onclick="toggleSetting(this)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-brand">
+                        <a href="#" class="brand-link" onclick="showPage('home')">
+                            <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <span class="brand-text">NetWise</span>
+                        </a>
+                    </div>
+                    <p class="footer-description">
+                        Empowering families with comprehensive internet safety education through interactive learning and AI-powered assistance.
+                    </p>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <span>support@netwise.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <span>1-800-NETWISE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h3>Quick Links</h3>
+                        <a href="#" onclick="showPage('kids-learning')">Kids Learning</a>
+                        <a href="#" onclick="showPage('parent-dashboard')">Parent Tools</a>
+                        <a href="#" onclick="showPage('ai-assistant')">AI Assistant</a>
+                        <a href="#" onclick="showPage('certification')">Certification</a>
+                    </div>
+
+                    <div class="link-group">
+                        <h3>Resources</h3>
+                        <a href="#" onclick="showPage('resources')">Safety Guides</a>
+                        <a href="#" onclick="showPage('about')">About Us</a>
+                        <a href="#" onclick="showPage('contact')">Contact</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 NetWise. All rights reserved. Making the internet safer for families worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="authTitle">Login</h2>
+                <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Login</button>
+
+                    <div class="auth-switch">
+                        Don't have an account? <a href="#" onclick="switchAuthMode('signup')">Sign up</a>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form hidden" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" name="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userType">I am a...</label>
+                        <select id="userType" name="userType" required>
+                            <option value="">Select your role</option>
+                            <option value="parent">Parent</option>
+                            <option value="educator">Educator</option>
+                            <option value="student">Student (13+)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#">Terms of Service</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+
+                    <div class="auth-switch">
+                        Already have an account? <a href="#" onclick="switchAuthMode('login')">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lesson Modal -->
+    <div id="lessonModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="lessonTitle">Lesson Title</h2>
+                <button class="modal-close" onclick="closeLessonModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="background: linear-gradient(135deg, var(--primary), #8B5CF6); border-radius: var(--radius-xl); padding: 2rem; color: var(--white); text-align: center; margin-bottom: 1.5rem;">
+                    <svg style="width: 4rem; height: 4rem; margin: 0 auto 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5,3 19,12 5,21"></polygon>
+                    </svg>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Interactive Lesson Ready!</h4>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.9;">This lesson includes games, videos, and quizzes to make learning fun and engaging.</p>
+                    <button class="btn btn-white" onclick="startLesson()">Start Lesson</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="background-color: var(--secondary-light); padding: 1rem; border-radius: var(--radius-lg); text-align: center;">
+                        <svg style="width: 2rem; height: 2rem; color: var(--secondary); margin: 0 auto 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                            <rect width="3" height="3" x="7" y="7" rx="1" ry="1"/>
+                            <rect width="3" height="3" x="14" y="7" rx="1" ry="1"/>
+                            <rect width="3" height="3" x="7" y="14" rx="1" ry="1"/>
+                            <rect width="3" height="3" x="14" y="14" rx="1" ry="1"/>
+                        </svg>
+                        <h5 style="color: var(--secondary-dark); margin-bottom: 0.25rem;">Interactive Games</h5>
+                        <p style="font-size: 0.875rem; color: var(--secondary); margin: 0;">Learn through play</p>
+                    </div>
+                    <div style="background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-lg); text-align: center;">
+                        <svg style="width: 2rem; height: 2rem; color: var(--primary); margin: 0 auto 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21"></polygon>
+                        </svg>
+                        <h5 style="color: var(--primary-dark); margin-bottom: 0.25rem;">Video Stories</h5>
+                        <p style="font-size: 0.875rem; color: var(--primary); margin: 0;">Engaging scenarios</p>
+                    </div>
+                    <div style="background-color: var(--accent-light); padding: 1rem; border-radius: var(--radius-lg); text-align: center;">
+                        <svg style="width: 2rem; height: 2rem; color: var(--accent); margin: 0 auto 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="7"/>
+                            <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                        </svg>
+                        <h5 style="color: var(--accent-dark); margin-bottom: 0.25rem;">Earn Badges</h5>
+                        <p style="font-size: 0.875rem; color: var(--accent); margin: 0;">Track your progress</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ai-assistant.js"></script>
+    <script src="js/kids-learning.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
